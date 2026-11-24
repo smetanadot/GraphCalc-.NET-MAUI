@@ -26,7 +26,6 @@ public class GraphParameter : INotifyPropertyChanged
         get => _value;
         set
         {
-            // Округляем до 2 знаков для красоты
             double rounded = Math.Round(value, 2);
             if (Math.Abs(_value - rounded) > 0.0001)
             {

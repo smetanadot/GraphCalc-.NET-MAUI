@@ -50,7 +50,7 @@ public class GraphDrawable : IDrawable
             }
         }
 
-        // Горизонтальные линии (ось Y) — исправлено от зависания
+        // Горизонтальные линии (ось Y)
         float bottomMathY = (originY - dirtyRect.Height) / Scale;
         float startY = (float)Math.Floor(bottomMathY / niceStep) * niceStep;
         safety = 0;
@@ -73,7 +73,7 @@ public class GraphDrawable : IDrawable
         canvas.DrawLine(originX, 0, originX, dirtyRect.Height);
         canvas.DrawString("0", originX - 15, originY + 5, 30, 20, HorizontalAlignment.Right, VerticalAlignment.Top);
 
-        // 5. Рисуем КАЖДУЮ функцию из списка своим цветом
+        // Рисуем каждую функцию из списка своим цветом
         if (Functions == null) return;
 
         foreach (var func in Functions)
@@ -81,44 +81,44 @@ public class GraphDrawable : IDrawable
             DrawSingleFunction(canvas, dirtyRect, originX, originY, func);
         }
 
-        if (Functions != null)
-        {
-            canvas.FillColor = Colors.Red;
-            double bestSolution = 99999;
-            double bestY = 0;
+        //if (Functions != null)
+        //{
+        //    canvas.FillColor = Colors.Red;
+        //    double bestSolution = 99999;
+        //    double bestY = 0;
 
-            foreach (var func in Functions)
-            {
+        //    foreach (var func in Functions)
+        //    {
 
-                var expression = new Expression(func.Formula);
-                double MathX = (SelectedMathX - originX) / Scale;
+        //        var expression = new Expression(func.Formula);
+        //        double MathX = (SelectedMathX - originX) / Scale;
 
-                double MathY = - (SelectedMathY - originY) / Scale;
-
-
-                expression.Parameters["x"] = MathX;
-
-                double y = Convert.ToDouble(expression.Evaluate());
-
-                if (bestSolution > Math.Abs(y - MathY))
-                {
-
-                    bestSolution = Math.Abs(y - MathY);
-                    bestY = y;
+        //        double MathY = - (SelectedMathY - originY) / Scale;
 
 
-                    System.Diagnostics.Debug.WriteLine(bestSolution);
+        //        expression.Parameters["x"] = MathX;
 
-                    System.Diagnostics.Debug.WriteLine(bestY);
+        //        double y = Convert.ToDouble(expression.Evaluate());
 
-                }
+        //        if (bestSolution > Math.Abs(y - MathY))
+        //        {
 
-            }
+        //            bestSolution = Math.Abs(y - MathY);
+        //            bestY = y;
+
+
+        //            System.Diagnostics.Debug.WriteLine(bestSolution);
+
+        //            System.Diagnostics.Debug.WriteLine(bestY);
+
+        //        }
+
+        //    }
             
-            System.Diagnostics.Debug.WriteLine((float)(bestY * Scale + originY));
+        //    System.Diagnostics.Debug.WriteLine((float)(bestY * Scale + originY));
 
-            canvas.FillCircle((float)SelectedMathX, (float)(originY - bestY * Scale), 5);
-        }
+        //    canvas.FillCircle((float)SelectedMathX, (float)(originY - bestY * Scale), 5);
+        //}
     }
 
     private void DrawSingleFunction(ICanvas canvas, RectF dirtyRect, float originX, float originY, GraphFunction func)

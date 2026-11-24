@@ -89,8 +89,7 @@ namespace DESMOS
         }
 
 
-        // --- СОХРАНЕНИЕ И ЗАГРУЗКА JSON ---
-        // 1. СОХРАНЕНИЕ (открывает окно "Сохранить как...")
+        //СОХРАНЕНИЕ
         private async void OnSaveClicked(object sender, EventArgs e)
         {
             // Собираем текущее состояние экрана в один объект
@@ -103,11 +102,10 @@ namespace DESMOS
                 Parameters = _parameters.ToList()
             };
 
-            // Превращаем объект в красивый JSON-текст
             var options = new JsonSerializerOptions { WriteIndented = true };
             string json = JsonSerializer.Serialize(project, options);
 
-            // Записываем текст в поток и открываем окно выбора папки
+
             using var stream = new MemoryStream(Encoding.UTF8.GetBytes(json));
             var result = await FileSaver.Default.SaveAsync("my_graph.json", stream, CancellationToken.None);
 
@@ -121,9 +119,9 @@ namespace DESMOS
             }
         }
 
-        // 2. ЗАГРУЗКА (открывает окно выбора файла)
+        //ЗАГРУЗКА
 
-        // Открываем окошко Drag & Drop по нажатию кнопки "Загрузить"
+        // Открываем окошко DragnDrop по нажатию кнопки
 
         private async Task LoadProjectFromStreamAsync(Stream stream)
         {
@@ -174,7 +172,7 @@ namespace DESMOS
             LoadOverlay.IsVisible = false;
         }
 
-        // Если пользователь всё-таки нажал "Выбрать файл..." внутри окошка
+        // Если пользователь всё-таки нажал
         private async void OnBrowseFileClicked(object sender, EventArgs e)
         {
             var jsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
@@ -199,7 +197,7 @@ namespace DESMOS
         }
 
 
-        // Подключаем приём внешних файлов из Проводника Windows для рамки DropZoneBorder
+        //Подключаем приём внешних файлов из Проводника Windows для рамки DropZoneBorder
         private void OnDropZoneHandlerChanged(object sender, EventArgs e)
         {
 #if WINDOWS
@@ -258,7 +256,7 @@ namespace DESMOS
         }
 
 
-        // --- ЗУМ КОЛЁСИКОМ МЫШИ (WINDOWS) ---
+        //ЗУМ КОЛЁСИКОМ МЫШИ
 
         private void OnGraphViewHandlerChanged(object sender, EventArgs e)
         {
@@ -280,7 +278,7 @@ namespace DESMOS
 #endif
         }
 
-        // --- ЗУМ ЩИПКОМ (СЕНСОРНЫЙ ЭКРАН / ТАЧПАД) ---
+        //ЗУМ ЩИПКОМ
 
         private void OnPinchUpdated(object sender, PinchGestureUpdatedEventArgs e)
         {
@@ -296,10 +294,10 @@ namespace DESMOS
             }
         }
 
-        // Общий метод масштабирования (используется кнопками, колесом и щипком)
+        //Общий метод масштабирования (используется кнопками, колесом и щипком)
         private void ApplyZoom(float zoomFactor)
         {
-            // Ограничиваем слишком сильный или слабый зум
+            //Ограничиваем слишком сильный или слабый зум
             float targetScale = _graphDrawable.Scale * zoomFactor;
             if (targetScale < 2f || targetScale > 50000f) return;
 
@@ -378,18 +376,18 @@ namespace DESMOS
             }
         }
 
-        private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
-        {
-            var pos = e.GetPosition(GraphView);
-            System.Diagnostics.Debug.WriteLine($"[TAP] position = {pos}");
+        //private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+        //{
+        //    var pos = e.GetPosition(GraphView);
+        //    System.Diagnostics.Debug.WriteLine($"[TAP] position = {pos}");
 
-            _graphDrawable.SelectedMathX = pos.Value.X;
-            _graphDrawable.SelectedMathY = pos.Value.Y;
+        //    _graphDrawable.SelectedMathX = pos.Value.X;
+        //    _graphDrawable.SelectedMathY = pos.Value.Y;
 
-            GraphView.Invalidate();
+        //    GraphView.Invalidate();
 
 
 
-        }
+        //}
     }
 }

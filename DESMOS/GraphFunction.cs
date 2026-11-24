@@ -32,7 +32,7 @@ public class GraphFunction : INotifyPropertyChanged
             {
                 _colorHex = value;
                 OnPropertyChanged();
-                // Сообщаем UI, что свойство LineColor тоже изменилось!
+                // Сообщаем UI, что свойство LineColor тоже изменилось
                 OnPropertyChanged(nameof(LineColor));
             }
         }
